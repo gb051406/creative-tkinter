@@ -1,40 +1,49 @@
 import tkinter as tk
-
-
+from PIL import ImageTk, Image
+import os
+from tkinter import *
 #custom functions
 def draw():
+    #adds user lines to graph
     x1 = int(txtX1.get())
     y1 = int(txtY1.get())
     x2 = int(txtX2.get())
     y2 = int(txtY2.get())
-    x1 +=400
-    y1 +=400
-    x2+=400
-    y2+=400
+    x1 = (x1*20)+10
+    y1 = (y1*20)+10
+    x2*=20
+    y2*=20
     canvas.create_line(x1,y1,x2,y2)
 def clear():
+    #clears made lines
     canvas.delete("all")
-    canvas.create_line(400, 0, 400,800)
-    canvas.create_line(0,400,800,400)
-    x = 390
-    y = 410
-    t = 0
-    s = 800
-    while t < 800:
-        canvas.create_line(x,t,y,t)
-        canvas.create_line(t,x,t,y)
-        t += 800/20
+    graph()
 def graph():
-    canvas.create_line(400, 0, 400,800)
-    canvas.create_line(0,400,800,400)
-    x = 390
-    y = 410
+    #makes graph x&y lines
+    canvas.create_line(10, 0, 10,800,fill="grey")
+    canvas.create_line(0,10,800,10,fill="grey")
+    #points of interest
+    canvas.create_text((300,600),text="Fish School")
+    canvas.create_text((600,700),text="Coral Reef")
+    canvas.create_text((700,400),text="Fish School")
+    canvas.create_text((200,350),text="Sea Turtles")
+    canvas.create_text((150,750),text="Coral Reef")
+    canvas.create_text((50,15),text="Scuba Boat")
+    #creates indenting lines and numbers for graph
+    x = 0
+    y = 20
     t = 0
+    textLocation=40
+    num = 2
     size = 800
     while t < 800:
-        canvas.create_line(x,t,y,t)
-        canvas.create_line(t,x,t,y)
+        canvas.create_line(x,t,y,t,fill="grey")
+        canvas.create_text((textLocation,30), text=str(num)+"m")
+        canvas.create_text((30,textLocation), text=str(num)+"m")
+        canvas.create_line(t,x,t,y,fill="grey")
         t += size/20
+        textLocation +=40
+        num += 2
 #window properties
 window =tk.Tk()
 window.title("Graphing with Tkinter")
@@ -54,9 +63,9 @@ txtY2 = tk.Entry(window)
 btn = tk.Button(window,text="Draw!",padx=20, command=draw)
 btnClear = tk.Button(window,text="clear",padx=20,command=clear)
 #create canvas
-
 canvas = tk.Canvas(window,width=800,height=800)
-#create GUI
+canvas.config(bg="light blue")
+#add to canvas
 lblX1.grid(row=0,column=1)
 lblY1.grid(row=1,column=1)
 lblX2.grid(row=2,column=1)
